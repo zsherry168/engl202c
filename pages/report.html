@@ -9,19 +9,19 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="../index.html">&emsp;Sherry Zhang</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" style="margin-right: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="../index.html">Home</a>
+            <a class="nav-link" style="margin-left: 20px;" href="../index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./biography.html">Biography</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./biography.html">Biography</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" style="margin-left: 20px;" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Writing Samples
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -33,12 +33,231 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./reflection.html">Reflection</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./reflection.html">Reflection</a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <h1>Report</h1>
+    <div class="box">
+      <center>
+        <p style="font-size: 65px;">Report</p>
+      </center>
+      <h1>Harris Corner Detection Project Report</h1>
+      <h2>Summary</h2>
+      <p>
+        The objective of the project is to implement the Harris Corner Detection algorithm to successfully identify corners in images. 
+        In our project, we used Gaussian smoothing and derivations to compute a response (R) score for each pixel in the image around 
+        its local neighborhood. Using the response score, we apply non-max suppression to extract the best number of corners (given as 
+        a parameter). Identifying corners is vital for patch matching as corners provide the most reliable information about a structure 
+        or object we aim to identify.
+      </p>
+      <h2>Algorithmic Approach</h2>
+      <p>
+        We approached the Harris Corner Detection algorithm by following the tasks listed in the instructions.
+      </p>
+      <ol>
+        <li>
+          <b>Read in a file of input parameters that governs the behavior of the program</b><br>
+          <code>
+            % read in file of input params<br>
+            [img, s, n, d, m] = read_corner_parameters('cornerparams.dat');<br><br>
+          </code>
+          <p>
+            The code above was provided  in the instructions, and it reads in the input parameters. Below is a breakdown of each input:
+          </p>
+          <ul>
+            <code>img</code> - image filename
+          </ul>
+          <ul>
+            <code>sigma</code> - Gaussian smoothing kernel sigma (standard deviation)
+          </ul>
+          <ul>
+            <code>n</code> - size of the local NxN neighborhood for accumulating sums for Harris corner detection
+          </ul>
+          <ul>
+            <code>d</code> - radius of neighborhood for suppressing multiple corner responses
+          </ul>
+          <ul>
+            <code>cornerNum</code> - number of corners we want to detect
+          </ul>
+        </li>
+        <li style="margin-top: 15px;">
+          <b>Read in the image and convert it to a grayscale, double float image</b>
+          <code>
+            <br>% read in image, convert to double float grayscale<br>
+            im = imread(img); im = double(im);<br>
+            greyIm = (im(:,:,1)+im(:,:,2)+im(:,:,3))/3;<br><br>
+          </code>
+          <p>
+            Converting an image to grayscale simplifies image processing by reducing complexity and computation requirements needed to process 
+            color information. By grayscaling, the algorithm focuses solely on the intensity and texture of the image. Next, we convert the 
+            image to double float as it increases the precision of calculations, giving more accurate and detailed results of pixel values. 
+          </p>
+        </li>
+        <li>
+          <b>Smooth the image using a Gaussian filter</b>
+          <code>
+            <br>% gaussian filter calculations<br>
+            halfwid = 3 * s;<br>
+            [xx,yy] = meshgrid(-halfwid:halfwid, -halfwid:halfwid);<br>
+            gauFilt = (exp(-1/(2*s ^ 2) * (xx .^2 + yy.^2)));<br>
+            norm = 1 / sum(gauFilt, "all");<br><br>
+            
+            % smooth the image using gaussian filter<br>
+            smoothedIm = imfilter(greyIm, gauFilt * norm, 'same', 'replicate');<br><br>
+          </code>
+          <p>
+            First, we determined the size of the Gaussian filter by calculating the half-width of the filter. The variable `s` represents the 
+            standard deviation of the Gaussian distribution. By multiplying `s` by 3, we ensure that the size of the Gaussian filter is large 
+            enough to cover over 99% of the total area under the Gaussian curve. 
+          </p>
+          <p>
+            Next, we created a grid in the line `[xx,yy] = meshgrid(-halfwid:halfwid, -halfwid:halfwid);`. This line generates two matrices `xx` 
+            and `yy` using the meshgrid function, respectively. The matrices represent the x and y coordinates of a grid spanning from `-halfwid`
+            to `+halfwid`. The grid is used to compute the value of the Gaussian function at every pixel within the filter’s size.
+          </p>
+          <p>
+            We then calculated the Gaussian filter with `gauFilt = (exp(-1/(2*s ^ 2) * (xx .^2 + yy.^2)));` for every point. This results in a matrix 
+            `gauFilt` where each element represents the filter’s weight at the corresponding point. The filter values are highest at the center (0, 0) 
+            and decrease as it travels away from the center. After, we normalize the filter, ensuring that all elements sum up to 1, by taking the 
+            inverse of the sum of all elements in the `gauFilt`  matrix.
+          </p>
+          <p>
+            Last, we applied the Gaussian smoothing filter to the grayscale image to reduce noise before finding the gradients of Gx and Gy.
+          </p>
+        </li>
+        <li>
+          <b>Compute the gradients images of Gx and Gy</b>
+          <code>
+            <br>% compute gradient images using central difference<br>
+            centralDiff = [0.5 0 -0.5];<br>
+            Gx = imfilter(smoothedIm, centralDiff, 'same', 'replicate');<br>
+            Gy = imfilter(smoothedIm, centralDiff', 'same', 'replicate');<br>
+          </code>
+          <p>
+            <br>After smoothing the image, we computed the gradients  Gx and Gy , which represents the first derivative of the image intensity relative 
+            to the horizontal and vertical directions. Significant changes in intensity are indicated by the high values of these gradients and denote 
+            characteristics of edges. For the Harris Corner Detector, we use  Gx and Gy to construct the Harris matrix for each pixel in the image. 
+            The Harris matrix encapsulates the direction and magnitude of the largest and smallest intensity changes around each pixel and is defined 
+            by the matrix below:
+          </p>
+          <center>
+            <img src="./images/harris_matrix.png">
+            <p><i>Figure: </i></p>
+          </center>
+          <p>
+            The matrix is then used to calculate the response score that evaluates the likeliness of a pixel being a corner in the image. We calculated 
+            the Harris matrix in the next part.
+          </p>
+        </li>
+        <li>
+          <b>Compute the Harris corner R score for each pixel over a local neighborhood</b>
+          <code>
+            <br>% products of derivatives<br>
+            GxGx = Gx .* Gx;<br>
+            GxGy = Gx .* Gy;<br>
+            GyGy = Gy .* Gy;<br><br>
+
+            % sums over local NxN neighborhood<br>
+            boxfilt = ones(n);<br>
+            Sx2 = imfilter(GxGx, boxfilt, "same");<br>
+            Sxy = imfilter(GxGy, boxfilt, "same");<br>
+            Sy2 = imfilter(GyGy, boxfilt, "same");<br>
+            newIm = zeros(size(smoothedIm, 1),size(smoothedIm, 2));<br><br>
+
+            % loop through the image<br>
+            for x = 1:size(smoothedIm, 1)<br>
+            &ensp; for y = 1:size(smoothedIm, 2)<br>
+            &ensp; &ensp; % define H(x, y)<br>
+            &ensp; &ensp; H = [Sx2(x, y) Sxy(x, y); Sxy(x, y) Sy2(x, y)];<br>
+            &ensp; &ensp; % compute R score<br>
+            &ensp; &ensp; R = det(H) - 0.05 * (trace(H))^2;<br>
+            &emsp; &emsp; % set R-score val for current (x, y)<br>
+            &emsp; &emsp; newIm(x, y) = R;<br>
+            &emsp; end<br>
+            end<br><br>
+            corners = zeros(m, 2);<br>
+            rVals = zeros(m, 1);<br><br>
+          </code>
+          <p>
+            Upon calculating  Gx and Gy , we computed the products of those gradients, summed those values over local NxN neighborhoods, and then generated 
+            the Harris matrix used to calculate the R score. After, we iterated through every pixel in the image from left to right, top to bottom and, 
+            using the Harris matrix, applied the response function to every pixel. The response function for the R score is R = det(M)-k(trace(M))2, which 
+            was covered in class and given to us in the instructions. Because we successfully calculated Gx and Gy earlier, the Harris Corner Detector can 
+            effectively identify regions with significant variation in intensity in multiple directions, which indicate corners. 
+          </p>
+        </li>
+        <li>
+          <b>Extract a scattered set of the M “best” corner features</b>
+          <code>
+            <br>% non-max suppression<br>
+            for i = 1:m<br>
+            &ensp; % find largest R score and index, store values<br>
+            &ensp; &ensp; [maxR, index] = max(RIm(:));<br>
+            &ensp; &ensp; [y, x] = ind2sub(size(RIm), index);<br>
+            &ensp; &ensp; corners(i, :) = [x, y];<br>
+            &ensp; &ensp; rVals(i) = maxR;<br><br>
+
+            &ensp; &ensp; xStart = x - d; xEnd = x + d;<br>
+            &ensp; &ensp; yStart = y - d; yEnd = y + d;<br><br>
+
+            &ensp; &ensp; % handle out of bounds indexing<br>
+            &ensp; &ensp; if yStart <= 0<br>
+            &ensp; &ensp; &ensp; yStart = 1;<br>
+            &ensp; &ensp; end<br>
+            &ensp; &ensp; if yEnd > size(RIm, 1)<br>
+            &ensp; &ensp; &ensp; yEnd = size(RIm, 1);<br>
+            &ensp; &ensp; end<br>
+            &ensp; &ensp; if xStart <= 0<br>
+            &ensp; &ensp; &ensp; xStart = 1;<br>
+            &ensp; &ensp; end<br>
+            &ensp; &ensp; if xEnd > size(RIm, 2)<br>
+            &ensp; &ensp; &ensp; xEnd = size(RIm, 2);<br>
+            &ensp; &ensp; end<br><br>
+
+            &ensp; &ensp; % suppress pixels within distance D<br>
+            &ensp; &ensp; RIm(yStart:yEnd, xStart:xEnd) = 0;<br>
+            end<br><br>
+          </code>
+          <p>
+            At this point, we have calculated the R score for each pixel within the image. The last step would be applying a threshold to retrieve the “best” 
+            corner features in the image. However, whenever a strong R response occurs, there are also several strong responses nearby. In other words, there 
+            are multiple detections of the same corner in the image.
+          </p>
+          <p>
+            To mitigate the problem, we had to filter out those detections to get a sparse set of corners. We followed the instructions provided and extracted 
+            the corners in decreasing order of R values. We started the pixel with the maximum R value, then set all pixels within some distance `d` of the pixel 
+            to a small value, effectively suppressing those neighboring pixels. We repeat the process with the next highest R value. While there are other 
+            approaches to suppression, we thought the suggestions provided in the PDF were the easiest to implement. 
+          </p>
+        </li>
+        <li>
+          <b>Output all corner features into an ASCII file</b>
+          <code>
+            <br>% write values to output file<br>
+            writematrix(m, "output.dat");<br>
+            writematrix([rVals, corners], "output.dat", "WriteMode","append");<br><br>
+          </code>
+          <p>
+            Finally, we wrote all the corners discovered by the Harris Corner Detector into an ASCII file. Each row in the file represents a corner detected in the 
+            image. The first column indicates the R score of the corner. The second column specifies the column location of the corner in the image. Similarly, 
+            the third column shows the row location of the corner within the image.
+          </p>
+        </li>
+      </ol>
+      <p>
+        To visualize the algorithmic approach, we also created a flowchart to show the flow of control and subroutine structure of the code.
+      </p>
+      <center>
+        <img src="./images/harris_flowchart.png" width="40%" height=auto>
+        <p><i>Figure: </i></p>
+      </center>
+      <h2>Intermediate and Final Results</h2>
+      <p>
+        In this section, we provide a few of our intermediate results in the form of screenshots of the outputs we got. The below figures show the image of the stick 
+        figures and the football players are after the Gaussian smoothing has been applied. 
+      </p>
+    </div>
   </body>
 </html>

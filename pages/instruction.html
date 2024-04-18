@@ -9,19 +9,19 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="../index.html">&emsp;Sherry Zhang</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" style="margin-right: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="../index.html">Home</a>
+            <a class="nav-link" style="margin-left: 20px;" href="../index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./biography.html">Biography</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./biography.html">Biography</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" style="margin-left: 20px;" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Writing Samples
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -33,12 +33,57 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./reflection.html">Reflection</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./reflection.html">Reflection</a>
           </li>
         </ul>
       </div>
     </nav>
-
-    <h1>Instruction Set</h1>
+    
+    <div class="box">
+      <center>
+        <p style="font-size: 65px;">Instruction Set</p>
+      </center>
+      <h1>How to Use the Terminal to Run a Python File (MacOS)</h1>
+      <p>
+        This instruction manual teaches users how to run their Python files in the MacOS terminal by covering basic terminal commands, directory navigation, 
+        and Python commands for executing programs. Knowing how to run a Python file in the terminal is important because it provides users with direct control 
+        over the script’s execution and helps with debugging.
+      </p>
+      <p>
+        NOTE: These instructions are for computer science beginners with a MacOS device, which uses the Unix-based operating system. Furthermore, it is expected 
+        that the user already has Visual Studio Code and Python installed and updated to the latest version. 
+      </p>
+      <h2>Materials</h2>
+      <li>MacOS device (Mac or Macbook)</li>
+      <li>Terminal</li>
+      <li>Python file (with code written inside)<br><br></li>
+      <h2>Terminal Basics</h2>
+      <p>
+        Every computer has a file system, which governs, manages, and organizes the computer’s files and directories (also known as folders). The file system can 
+        be represented as a hierarchy, as shown in Figure 1.<sup>1</sup> It starts at the root, which is the top directory of the hierarchical file tree. Users can move up and 
+        down the hierarchical tree to find desired files or directories. Each file and directory will also have its path, which is the specific location or route 
+        used to uniquely identify where the file or directory is in the file system.
+      </p>
+      <center>
+        <img src="./images/file_system_hierarchy.png" width=50% height=auto>
+        <p><i>Figure 1: Hierarchal structure of the file system</i></p>
+      </center>
+      <p>
+        On MacOS, files and directories can be accessed through Finder or a variety of Unix commands via Terminal. To be brief, Finder uses a graphical user interface 
+        (GUI) that represents the file system with icons, windows, and menus, making it easy for those with no computer background to use. Meanwhile, Terminal uses a 
+        command line interface (CLI), which is a text-based interface used for interacting with the computer, running programs, and managing files. 
+      </p>
+      <p>
+        For this instruction set, Terminal will be used to run a Python program. Users need to familiarize themselves with the following three Unix commands before proceeding. 
+      </p>
+      <li>
+        pwd - Short for print working directory,  pwd  prints the full name (path) of the current directory that is used at the moment. To note, the current directory, 
+        which is also the last directory in the path, is listed before the % symbol. <br></br>
+        <p>
+          As shown below, after entering pwd, the terminal prints the path /Users/sherryzhang, where sherryzhang is the current directory. sherryzhang is equivalent to ~, 
+          which represents the home directory of the user, hence why ~ is displayed instead of sherryzhang. Your ~ will have a different name.
+        </p>
+      </li>
+    </div>
   </body>
 </html>

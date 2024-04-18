@@ -9,19 +9,19 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="../index.html">&emsp;Sherry Zhang</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" style="margin-right: 20px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="../index.html">Home</a>
+            <a class="nav-link" style="margin-left: 20px;" href="../index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./biography.html">Biography</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./biography.html">Biography</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" style="margin-left: 20px;" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Writing Samples
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -33,123 +33,120 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./reflection.html">Reflection</a>
+            <a class="nav-link" style="margin-left: 20px;" href="./reflection.html">Reflection</a>
           </li>
         </ul>
       </div>
     </nav>
-
-      <div class="box">
-        <center>
-          <p style="font-size: 65px;">Technical Description</p>
-        </center>
-        <h1>An Overview of the Linked List</h1>
-        <p>
-          In computer science, a data structure is a specialized format used to organize, process, store, and retrieve data. Some examples of common data structures 
-          include arrays, linked lists, stacks, and queues. Each data structure has its advantages and disadvantages, whether it is relative to access time or memory 
-          usage. This overview will specifically cover what a linked list is and how it works.
-        </p>
-        <h2>Linked List</h2>
-        <p>
-          A linked list is a linear collection of data elements called nodes. Also known as building blocks, a node stores a piece of data and a pointer to the next 
-          node in the list. The data can be anything. It can be an integer, a string, or even another linked list. On the other hand, pointers are variables that store 
-          a memory address. In this scenario, the NEXT pointer of a node holds the address of where the next node in the list sits in memory. If the node is the last 
-          one in the list, it will point to NULL, meaning no value exists.
-        </p>
-        <center>
-          <img src="./images/singly_linked_list.png" width="85%" height=auto>
-          <p><i>Figure 1: Diagram of a basic linked list</i></p>
-        </center>
-        <p>
-          Together, these nodes—when linked together via NEXT pointers—form the linked list. An example is provided in Figure 1.<sup>1</sup> There are three nodes in the linked list, 
-          each indicated by the elliptical dashed line. Within each node, there is the data and the NEXT pointer. As seen above, NEXT has an arrow that points to the next 
-          node, indicating a link between the two nodes. In the case of the last node, the NEXT pointer referencing NULL denotes the end of the linked list.
-        </p>
-        <h2>The “Head” of the List</h2>
-        <p>
-          In Figure 1, there is also a pointer called HEAD, which points to the first node or start of the linked list. If HEAD points to NULL, it means the linked list 
-          is empty. The HEAD pointer is crucial because it serves as the entry point to the linked list. Without the HEAD pointer, there would be no way to access the 
-          nodes inside the linked list, as each node is sequentially linked and can be accessed from the previous one. Furthermore, the HEAD pointer allows operations, 
-          such as insertion, deletion, and traversal by providing a start point. 
-        </p>
-        <p>
-          Sometimes a linked list may also have a TAIL, which marks the last node or the end of the linked list. Both the HEAD and TAIL need to be updated by the programmer 
-          when he or she inserts or deletes nodes from the front or end of the linked list. 
-        </p>
-        <h2>Insertion</h2>
-        <p>
-          The insertion operation of a linked list allows the addition of new nodes to the list with minimal overhead. There are three ways to insert a new node: in the 
-          beginning, in the middle, and at the end. To keep it simple, only insertion in the beginning will be covered as it is the most commonly used insertion policy. 
-        </p>
-        <p>
-          To insert a new node at the beginning of the list, the NEXT pointer of the new node is set to the current HEAD of the list. After, the HEAD pointer is updated to 
-          point to the new node. In Figure 2 below, a new node E is inserted to the front of the linked list. (1) The NEXT pointer of E points to the HEAD of the list, node 
-          A. (2) After, the HEAD pointer is reassigned to the new node E, denoting a successful insertion.
-        </p>
-        <center>
-          <img src="./images/linked_list_insertion.png" width="85%" height="auto">
-          <p><i>Figure 2: Inserting the new node E at the beginning of the linked list</i></p>
-        </center>
-        <h2>Deletion</h2>
-        <p>
-          Deletion of nodes from a linked list involves removing a node from the list by re-linking the neighboring nodes to maintain the integrity of the list.
-        </p>
-        <p>
-          To delete a node, the node to be deleted must be located by traversing the list from the head until found or the address of the node must be provided. If the node 
-          to be deleted is at the beginning, the head pointer is simply updated to the next node. However, for a node in the middle or at the end, the previous node’s NEXT 
-          pointer is reassigned to skip the node to be deleted and point directly to the node following it. 
-        </p>
-        <p>
-          In Figure 3 below, the node C is to be removed from the linked list. Node C’s previous node is B; the next node is D. (1) As shown, node B’s NEXT pointer now points 
-          to node D, completely removing C from the linked list.
-        </p>
-        <center>
-          <img src="./images/linked_list_deletion.png" width="85%" height="auto">
-          <p><i>Figure 3: Deleting the node C from the linked list by relinking the previous node’s NEXT pointer</i></p>
-        </center>
-        <h2>Different Types of Linked List</h2>
-        <p>
-          The linked list covered so far is the singly linked list. Now it is time to explore their variants: doubly linked list, circular linked list, and circular doubly linked list.
-        </p>
-        <h3><i>Doubly Linked List</i></h3>
-        <p>
-          The doubly linked list builds off of the singly linked list by allowing two-way traversal. In this linked list, each node contains two pointers: the PREV pointer and the 
-          NEXT pointer. The PREV pointer points to the node that precedes the current node in the list. Figure 4 is a representation of the doubly linked list.
-        </p>
-        <center>
-          <img src="./images/doubly_linked_list.png" width="85%" height="auto">
-          <p><i>Figure 4: Doubly linked list</i></p>
-        </center>
-        <h3><i>Circular Linked List</i></h3>
-        <p>
-          The circular linked list modifies the singly linked list by making the last node point back to the first node, creating a circular structure. This means that no nodes will 
-          point to NULL. A visual of a circular linked list is provided in Figure 5.
-        </p>
-        <center>
-          <img src="./images/circular_linked_list.png" width="85%" height="auto">
-          <p><i>Figure 5: Circular linked list</i></p>
-        </center>
-        <h3><i>Circular Doubly Linked List</i></h3>
-        <p>
-          The circular doubly linked list combines the doubly linked list and circular linked list. It is doubly linked, with the first node pointing back to the last node and the 
-          last node pointing back to the first node to form a circle. Figure 6 provides an example of the circular doubly linked list.
-        </p>
-        <center>
-          <img src="./images/circular_doubly_linked_list.png" width="85%" height="auto">
-          <p><i>Figure 6: Circular doubly linked list</i></p>
-        </center>
-        <h2>Purpose of Linked Lists</h2>
-        <p>
-          Linked lists are fundamental in computer science to organize and manage data. They are used in dynamic memory allocation to keep track of the free memory spaces in the heap. 
-          Furthermore, linked lists are used in everyday real-life applications. For example, linked lists are utilized to implement the browser history feature. Each page visited can 
-          be represented by a node in a doubly linked list, allowing forward and backward navigation of the history. This is just one example exemplifying the flexibility and efficiency 
-          of linked lists for managing data in everyday applications. 
-        </p>
-        <footer style="margin-top: 40px;">
-          <p><sup>1</sup> Image from <a href="https://www.geeksforgeeks.org/what-is-linked-list/">GeeksforGeeks</a></p>
-        </footer>
-
-      </div>
-
+    <div class="box">
+      <center>
+        <p style="font-size: 65px;">Technical Description</p>
+      </center>
+      <h1>An Overview of the Linked List</h1>
+      <p>
+        In computer science, a data structure is a specialized format used to organize, process, store, and retrieve data. Some examples of common data structures 
+        include arrays, linked lists, stacks, and queues. Each data structure has its advantages and disadvantages, whether it is relative to access time or memory 
+        usage. This overview will specifically cover what a linked list is and how it works.
+      </p>
+      <h2>Linked List</h2>
+      <p>
+        A linked list is a linear collection of data elements called nodes. Also known as building blocks, a node stores a piece of data and a pointer to the next 
+        node in the list. The data can be anything. It can be an integer, a string, or even another linked list. On the other hand, pointers are variables that store 
+        a memory address. In this scenario, the NEXT pointer of a node holds the address of where the next node in the list sits in memory. If the node is the last 
+        one in the list, it will point to NULL, meaning no value exists.
+      </p>
+      <center>
+        <img src="./images/singly_linked_list.png" width="85%" height=auto>
+        <p><i>Figure 1: Diagram of a basic linked list</i></p>
+      </center>
+      <p>
+        Together, these nodes—when linked together via NEXT pointers—form the linked list. An example is provided in Figure 1.<sup>1</sup> There are three nodes in the linked list, 
+        each indicated by the elliptical dashed line. Within each node, there is the data and the NEXT pointer. As seen above, NEXT has an arrow that points to the next 
+        node, indicating a link between the two nodes. In the case of the last node, the NEXT pointer referencing NULL denotes the end of the linked list.
+      </p>
+      <h2>The “Head” of the List</h2>
+      <p>
+        In Figure 1, there is also a pointer called HEAD, which points to the first node or start of the linked list. If HEAD points to NULL, it means the linked list 
+        is empty. The HEAD pointer is crucial because it serves as the entry point to the linked list. Without the HEAD pointer, there would be no way to access the 
+        nodes inside the linked list, as each node is sequentially linked and can be accessed from the previous one. Furthermore, the HEAD pointer allows operations, 
+        such as insertion, deletion, and traversal by providing a start point. 
+      </p>
+      <p>
+        Sometimes a linked list may also have a TAIL, which marks the last node or the end of the linked list. Both the HEAD and TAIL need to be updated by the programmer 
+        when he or she inserts or deletes nodes from the front or end of the linked list. 
+      </p>
+      <h2>Insertion</h2>
+      <p>
+        The insertion operation of a linked list allows the addition of new nodes to the list with minimal overhead. There are three ways to insert a new node: in the 
+        beginning, in the middle, and at the end. To keep it simple, only insertion in the beginning will be covered as it is the most commonly used insertion policy. 
+      </p>
+      <p>
+        To insert a new node at the beginning of the list, the NEXT pointer of the new node is set to the current HEAD of the list. After, the HEAD pointer is updated to 
+        point to the new node. In Figure 2 below, a new node E is inserted to the front of the linked list. (1) The NEXT pointer of E points to the HEAD of the list, node 
+        A. (2) After, the HEAD pointer is reassigned to the new node E, denoting a successful insertion.
+      </p>
+      <center>
+        <img src="./images/linked_list_insertion.png" width="85%" height=auto>
+        <p><i>Figure 2: Inserting the new node E at the beginning of the linked list</i></p>
+      </center>
+      <h2>Deletion</h2>
+      <p>
+        Deletion of nodes from a linked list involves removing a node from the list by re-linking the neighboring nodes to maintain the integrity of the list.
+      </p>
+      <p>
+        To delete a node, the node to be deleted must be located by traversing the list from the head until found or the address of the node must be provided. If the node 
+        to be deleted is at the beginning, the head pointer is simply updated to the next node. However, for a node in the middle or at the end, the previous node’s NEXT 
+        pointer is reassigned to skip the node to be deleted and point directly to the node following it. 
+      </p>
+      <p>
+        In Figure 3 below, the node C is to be removed from the linked list. Node C’s previous node is B; the next node is D. (1) As shown, node B’s NEXT pointer now points 
+        to node D, completely removing C from the linked list.
+      </p>
+      <center>
+        <img src="./images/linked_list_deletion.png" width="85%" height=auto>
+        <p><i>Figure 3: Deleting the node C from the linked list by relinking the previous node’s NEXT pointer</i></p>
+      </center>
+      <h2>Different Types of Linked List</h2>
+      <p>
+        The linked list covered so far is the singly linked list. Now it is time to explore their variants: doubly linked list, circular linked list, and circular doubly linked list.
+      </p>
+      <h3><i>Doubly Linked List</i></h3>
+      <p>
+        The doubly linked list builds off of the singly linked list by allowing two-way traversal. In this linked list, each node contains two pointers: the PREV pointer and the 
+        NEXT pointer. The PREV pointer points to the node that precedes the current node in the list. Figure 4 is a representation of the doubly linked list.
+      </p>
+      <center>
+        <img src="./images/doubly_linked_list.png" width="85%" height=auto>
+        <p><i>Figure 4: Doubly linked list</i></p>
+      </center>
+      <h3><i>Circular Linked List</i></h3>
+      <p>
+        The circular linked list modifies the singly linked list by making the last node point back to the first node, creating a circular structure. This means that no nodes will 
+        point to NULL. A visual of a circular linked list is provided in Figure 5.
+      </p>
+      <center>
+        <img src="./images/circular_linked_list.png" width="85%" height=auto>
+        <p><i>Figure 5: Circular linked list</i></p>
+      </center>
+      <h3><i>Circular Doubly Linked List</i></h3>
+      <p>
+        The circular doubly linked list combines the doubly linked list and circular linked list. It is doubly linked, with the first node pointing back to the last node and the 
+        last node pointing back to the first node to form a circle. Figure 6 provides an example of the circular doubly linked list.
+      </p>
+      <center>
+        <img src="./images/circular_doubly_linked_list.png" width="85%" height=auto>
+        <p><i>Figure 6: Circular doubly linked list</i></p>
+      </center>
+      <h2>Purpose of Linked Lists</h2>
+      <p>
+        Linked lists are fundamental in computer science to organize and manage data. They are used in dynamic memory allocation to keep track of the free memory spaces in the heap. 
+        Furthermore, linked lists are used in everyday real-life applications. For example, linked lists are utilized to implement the browser history feature. Each page visited can 
+        be represented by a node in a doubly linked list, allowing forward and backward navigation of the history. This is just one example exemplifying the flexibility and efficiency 
+        of linked lists for managing data in everyday applications. 
+      </p>
+      <footer style="margin-top: 40px;">
+        <p><sup>1</sup> Image from <a href="https://www.geeksforgeeks.org/what-is-linked-list/">GeeksforGeeks</a></p>
+      </footer>
+    </div>
   </body>
 </html>
