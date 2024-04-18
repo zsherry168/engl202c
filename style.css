@@ -1,3 +1,10 @@
 h1 {
   color: green;
 }
+
+.box {
+  margin-top: 60px;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-bottom: 60px;
+}
