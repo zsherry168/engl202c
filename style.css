@@ -1,5 +1,14 @@
 h1, h2, h3 {
   color: green;
+  font-family: "Open Sans";
+}
+
+p {
+  font-family: "Open Sans";
+}
+
+code {
+  color: rgb(41, 69, 87);
 }
 
 .box {
@@ -7,4 +16,16 @@ h1, h2, h3 {
   margin-left: 80px;
   margin-right: 80px;
   margin-bottom: 60px;
+}
+
+.comment {
+  color: green;
+}
+
+.input {
+  color: rgb(215, 23, 225);
+}
+
+.keyword {
+  color: blue;
 }
