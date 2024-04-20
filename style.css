@@ -29,3 +29,7 @@ code {
 .keyword {
   color: blue;
 }
+
+.function {
+  color: rgb(105, 127, 19);
+}

@@ -41,7 +41,138 @@
         </ul>
       </div>
     </nav>
-
-    <h1>Documentation</h1>
+    <div class="box">
+      <center>
+        <p style="font-size: 60px;">Documentation</p>
+      </center>
+      <h1>mdadm Library for Linear Devices</h1>
+      <p>
+        The mdadm library integrates JBOD (Just a Bunch of Disks), a storage architecture that consists of numerous disks inside 
+        a single storage compound, into an existing storage system. This library implements functionalities of the mdadm (multiple 
+        disk and device administration), which is a Linux utility. Specifically, this library works with a linear device that 
+        assembles multiple disks to appear as one large disk to the operating system. Ultimately, the mdadm library allows us to 
+        access linear devices and perform read and write operations while effectively managing storage. Furthermore, caching is 
+        implemented to improve latency and performance and networking allows mdadm users to work with remote JBOD servers.<br><br>
+      </p>
+      <h2>Reading and Writing to JBOD (mdadm Linear Device)</h2>
+      <p>
+        We are utilizing mdadm to implement a linear device that allows reading and writing across and within multiple disks and 
+        blocks when mounted. With the cache functionality, the mdadm functionalities store data and allow the JBOD system to access 
+        it whenever needed.
+      </p>
+      <h3 class="function"><i>int mdadm_mount(void)</i></h3>
+      <p>
+        Mounts the linear device. mdadm users will be able to run read, write, and JBOD operations on the linear address space. 
+        mdadm_mount will fail if called for a second time without calling mdadm_unmount in between.
+      </p>
+      <p>
+        <span><b>Parameter</b>: void</span><br>
+        <span><b>Return value</b>: int (1 on success and -1 on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to mount the linear device, they can directly call:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;mdadm_mount ( );
+      </p>
+      <h3 class="function"><i>int mdadm_unmount(void)</i></h3>
+      <p>
+        Unmounts the linear device. All commands to the linear device will fail. mdadm_unmount will fail if called for a second 
+        time without calling mdadm_mount in between.
+      </p>
+      <p>
+        <span><b>Parameter</b>: void</span><br>
+        <span><b>Return value</b>: int (1 on success and -1 on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to unmount the linear device, they can directly call:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;mdadm_unmount ( );
+      </p>
+      <h3 class="function"><i>int mdadm_read(uint32_t addr, uint32_t len, uint8_t *buf)</i></h3>
+      <p>
+        Read len bytes into buf starting at addr. Calling read on an unmounted device automatically fails. Reading from an out-of-bound 
+        address will fail. A read larger than 1,024 bytes will fail; len can be 1,024 bytes at most. If len is non-zero and buf is NULL, 
+        read will fail.
+      </p>
+      <p>
+        <span><b>Parameters</b>:</span><br>
+        &#x2022; addr — address to start reading from<br>
+        &#x2022; len — number of bytes to read<br>
+        &#x2022; buf — pointer to memory location to store bytes read<br>
+        <span><b>Return value</b>: int (len on success and -1 on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to read 250 bytes at address 2675, then here’s what they should do:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;char buf [250];<br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;mdadm_read (2675, 250, buf);
+      </p>
+      <h3 class="function"><i>int mdadm_write(uint32_t addr, uint32_t len, const uint8_t *buf)</i></h3>
+      <p>
+        Writes len bytes from the user-supplied buf buffer to your storage system, starting at address addr. mdadm_write is very similar 
+        to mdadm_read. Calling write on an unmounted device automatically fails. Writing to an out-of-bound linear address will fail. A 
+        read larder than 1,024 bytes should fail; len can be 1,024 bytes at most.
+      </p>
+      <p>
+        <span><b>Parameters</b>: </span><br>
+        &#x2022; addr — address to start writing from<br>
+        &#x2022; len —  number of bytes to write<br>
+        &#x2022; buf — pointer to memory location that stores the bytes to be written into the block<br>
+        <span><b>Return value</b>: int (len on success and -1 on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to write 25 bytes at address 8927, then here’s what they should do:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;char buf [25];<br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;mdadm_write (8927, 25, buf);<br><br>
+      </p>
+      <h2>Using the Cache</h2>
+      <p>
+        A block cache was implemented in mdadm to significantly improve latency and reduce the load on the JBOD. mdadm users will be able to 
+        create and destroy caches using the cache_create and cache_destroy methods. The cache will contain block entries from mdadm, allowing 
+        us to perform read and write operations faster. In the case of mdadm, the key will be the tuple consisting of the disk number and block 
+        number that identifies a specific block in JBOD, and the value will be the contents within the block. 
+      </p>
+      <h3 class="function"><i>int cache_create(int num_entries)</i></h3>
+      <p>
+        Dynamically allocates space for num_entries cache entries and stores the address in the cache global variable. Also sets the cache_size 
+        to num_entries. Calling cache_create twice without an intervening cache_destroy in between will fail.
+      </p>
+      <p>
+        <span><b>Parameter</b>: num_entries — number of entries in the cache</span><br>
+        <span><b>Return value</b>: int (1 on success and -1 on failure)</span><br><br>
+        <spaan><b>Example</b>: If a user wants to utilize a cache that can hold 17 entries, this is what they should do:</spaan><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;cache_create (17);
+      </p>
+      <h3 class="function"><i>int cache_destroy(void)</i></h3>
+      <p>
+        Frees the dynamically allocated space for the cache and sets cache to NULL and cache_size to 0. Calling cache_destroy twice without an 
+        intervening cache_create in between will fail.
+      </p>
+      <p>
+        <span><b>Parameter</b>: void</span><br>
+        <span><b>Return value</b>: int (1 on success and -1 on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to destroy the cache, this is what they should do:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;cache_destroy ( );<br><br>
+      </p>
+      <h2>Connecting to the Server</h2>
+      <p>
+        A networking support was created for the mdadm implementation to increase the system's flexibility. As a result, the JBOD systems can accept 
+        JBOD operations over a network using a network proprietary networking protocol. The JBOD system has an embedded server component that can be 
+        configured to an IP address and listen for JBOD operations from a port. The client component of the protocol will connect to the JBOD server 
+        and execute multiple JBOD operations over the network. In summary, networking support in mdadm helps avoid downtime when a JBOD system 
+        malfunctions by switching to another JBOD system on a whim. 
+      </p>
+      <h3 class="function"><i>bool jbod_connect(const char *ip, uint16_t port)</i></h3>
+      <p>
+        Attempts to connect to the server and sets the global variable cli_sd to the socket.
+      </p>
+      <p>
+        <span><b>Parameters</b>: </span><br>
+        &#x2022; ip — IP address of the device<br>
+        &#x2022; port — port for the socket<br>
+        <span><b>Return value</b>: boolean (true on success and false on failure)</span><br><br>
+        <span><b>Example</b>: If a user wants to connect to the server with IP address 127.0.0.1 and port 3333, they should do the following:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;jbod_connect (127.0.0.1,  3333);
+      </p>
+      <h3 class="function"><i>bool jbod_disconnect(void)</i></h3>
+      <p>
+        Disconnects from the server and resets cli_sd to -1.
+      </p>
+      <p>
+        <span><b>Parameter</b>: void</span><br>
+        <span><b>Return value</b>: void</span><br><br>
+        <span><b>Example</b>: If a user wants to disconnect from the server, they should do the following:</span><br><br>
+        &emsp;&emsp;&emsp;&emsp;&ensp;jbod_disconnect ( );
+      </p>
+    </div>
   </body>
 </html>
