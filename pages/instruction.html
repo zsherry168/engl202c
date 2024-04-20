@@ -63,13 +63,13 @@
       <h2>Terminal Basics</h2>
       <p>
         Every computer has a file system, which governs, manages, and organizes the computer’s files and directories (also known as folders). The file system can 
-        be represented as a hierarchy, as shown in Figure 1.<sup>1</sup> It starts at the root, which is the top directory of the hierarchical file tree. Users can move up and 
-        down the hierarchical tree to find desired files or directories. Each file and directory will also have its path, which is the specific location or route 
-        used to uniquely identify where the file or directory is in the file system.
+        be represented as a hierarchy, as shown in Figure 1.<sup>1</sup> It starts at the root, which is the top directory of the hierarchical file tree. Users 
+        can move up and down the hierarchical tree to find desired files or directories. Each file and directory will also have its path, which is the specific 
+        location or route used to uniquely identify where the file or directory is in the file system.
       </p>
       <center>
         <img src="./images/file_system_hierarchy.png" width=50% height=auto>
-        <p><i>Figure 1: Hierarchal structure of the file system</i></p>
+        <p style="font-size: 14px;"><i>Figure 1: Hierarchal structure of the file system</i></p>
       </center>
       <p>
         On MacOS, files and directories can be accessed through Finder or a variety of Unix commands via Terminal. To be brief, Finder uses a graphical user interface 
@@ -80,13 +80,138 @@
         For this instruction set, Terminal will be used to run a Python program. Users need to familiarize themselves with the following three Unix commands before proceeding. 
       </p>
       <li>
-        pwd - Short for print working directory,  pwd  prints the full name (path) of the current directory that is used at the moment. To note, the current directory, 
-        which is also the last directory in the path, is listed before the % symbol. <br></br>
-        <p>
-          As shown below, after entering pwd, the terminal prints the path /Users/sherryzhang, where sherryzhang is the current directory. sherryzhang is equivalent to ~, 
-          which represents the home directory of the user, hence why ~ is displayed instead of sherryzhang. Your ~ will have a different name.
-        </p>
+          <b>pwd</b> - Short for print working directory, <code class="terminal">pwd</code> prints the full name (path) of the current directory that is used at the 
+          moment. To note, the current directory, which is also the last directory in the path, is listed before the <code>%</code> symbol. <br></br>
+
+          <div style="margin-left: 40px;">
+            As shown below, after entering <code>pwd</code>, the terminal prints the path <code>/Users/sherryzhang</code>, where <code>sherryzhang</code> is the current directory. 
+            <code>sherryzhang</code> is equivalent to <code>~</code>, which represents the home directory of the user, hence why <code>~</code> is displayed instead of 
+            <code>sherryzhang</code>. <span style="color: red">Your <code style="color: red">~</code> will have a different name—your username.</span><br>
+            <img src="images/pwd.png" width="40%" height=auto><br><br>
+          </div>
       </li>
+      <li>
+        <b>ls</b> - Short for list, <code class="terminal">ls</code> displays all files and directories under the user’s current directory. To show hidden files too, type 
+        <code class="terminal">ls -a</code> instead.<br><br>
+
+        <div style="margin-left: 40px;">
+          Upon typing <code>ls</code>, the terminal displays all the files and folders (Applications, Downloads, Documents, etc.) under the current directory <code>~</code> 
+          (also known as <code>sherryzhang</code>).<br>
+          <img src="images/ls.png" width="85%" height=auto><br><br>
+        </div>
+      </li>
+      <li>
+        <b>cd</b> - Short for change directory, <code>cd</code> is used to move to another directory. To use the command, the user should first type <code>cd</code>, followed by 
+        the name of the directory they want to navigate to.<br><br>
+        <div style="margin-left: 40px;">
+          &#x2022; To move down to a new directory: <code class="terminal">cd name_of_directory</code>, where <code>name_of_directory</code> is the next directory<br>
+          &#x2022; To return to the previous directory: <code class="terminal">cd ..</code><br><br>
+          NOTE: If you get the error <span style="color:red">cd: no such file or directory</span>, it means the directory you are trying to navigate to does not exist under 
+          your current directory.<br><br>
+          The current directory is <code>sherryzhang</code>. The desired directory is <code>Documents</code>. After entering <code>cd Documents</code>, the new path is 
+          <code>Users/sherryzhang/Documents</code>, meaning the current directory is now <code>Documents</code>. A change in path indicates a successful directory change.<br>
+          <img src="images/cd_forward.png" width="53%" height=auto><br><br>
+          <code>cd ..</code> is being used to return to the <code>sherryzhang</code> directory from <code>Documents</code>.<br>
+          <img src="images/cd_back.png" width="48%" height=auto><br><br>
+        </div>
+      </li>
+      <p>
+        With the three commands discussed above, one will be able to easily navigate the terminal to find desired files and directories.<br><br>
+      </p>
+      <h2>Navigating to the Correct Directory</h2>
+      <p>
+        Before running the Python file, it is necessary to ensure that you are in the correct directory. Using the three commands covered above (pwd, ls, and cd), you will need 
+        to navigate to the directory where the Python file is located. 
+      </p>
+      <ol>
+        <li>
+          <b>Determine the path by figuring out which folder the Python file is in.</b>
+            Which directory did you create and store your Python file in? If you are using Visual Studio Code, the path should be displayed at the top of the text editor. You can 
+            also go to Finder and check which folder the file is under. In this case, my path is <code>Users/sherryzhang/Documents/courses/hello.py</code>, and <code>hello.py</code> 
+            is under the directory courses, which is my target directory.<br>
+          <img src="./images/path.png" width="45%" height=auto><br><br>
+        </li>
+        <li>
+          <b>Open your Terminal.</b>
+          If you cannot find Terminal, search for it under Spotlight Search (click the magnifying glass icon on the top right of your screen). Upon opening Terminal, a black box 
+          should appear with an area to write text.<br>
+          <img src="./images/terminal.png" width="55%" height=auto><br><br>
+        </li>
+        <li>
+          <b>Type pwd to locate the current directory.</b>
+          This will help you understand where your starting point is. In my case, I am starting in the <code>sherryzhang</code> directory.<br>
+          <img src="images/pwd.png" width="40%" height=auto><br><br>
+        </li>
+        <li>
+          <b>Type ls to see which files and directories are under the current directory.</b>
+          By listing all the directories and files under the current directory, you can see if you are on the right path. The <code>sherryzhang</code> directory has 13 folders and 2 
+          files. The next directory in the path I am looking for is <code>Documents</code>, which is indeed under <code>sherryzhang</code>.<br>
+          <img src="images/ls.png" width="85%" height=auto><br><br>
+        </li>
+        <li>
+          <b>Use the cd command to navigate to the next directory in the path.</b>
+          The next directory follows right after the current directory in the path. Type <code>cd</code> with the name of the folder followed after to change directories. In the 
+          example below, I changed my directory to <code>Documents</code> since it is the directory that follows after <code>sherryzhang</code> in the path. If you navigated to the 
+          wrong directory, type <code>cd ..</code> to return to the previous directory.<br>
+          <img src="./images/cd_nav.png" width="48%" height=auto><br><br>
+        </li>
+        <li>
+          <b>Repeat Step 5 until you reach the directory containing the Python file.</b>
+          For additional help, use Step 3 to check if you are on the correct path, and use Step 4 to see if the next directory exists. In the example below, I use <code>pwd</code> to 
+          see where I am on the path. Then, I use <code>cd</code> to change to the next directory in the path. I repeat those steps until I am in the directory where my Python file is 
+          located. In this case, my Python file <code>hello.py</code> (highlighted in blue) is located under the <code>courses</code> directory, which I successfully located.<br>
+          <img src="./images/navigate.png" width="70%" height=auto><br><br>
+        </li>
+      </ol>
+      <h2>Running the Python File</h2>
+      <p>
+        Now that the terminal is in the correct directory, the Python file can be run. The command for running the Python file is <code class="terminal"">python3 name_of_file.py</code>, 
+        where <code>name_of_file</code> is the name of the Python file. The <code>.py</code> indicates that the file is a Python file.
+      </p>
+      <p>
+        Here, the file I want to run is <code>hello.py</code>, where hello is the name of the file. Upon entering the command, the terminal runs the Python script and outputs the result. 
+        In <code>hello.py</code>, the Python program prints “Hello World!” and lets the user know that the program has successfully run.<br>
+        <img src="./images/run_python_file.png" width="60%"><br><br>
+      </p>
+      <h2>Troubleshooting</h2>
+      <p>
+        If you run the Python file and see the error message <span style="color:red">[Errno 2] No such file or directory</span>, it means that you are in the wrong directory. In other 
+        words, the Python file cannot be found under the current directory that you are in. To fix the issue, refer back to the section “Navigating to the Correct Directory” to find the 
+        right directory.<br>
+        <img src="./images/error.png" width="80%"><br><br>
+      </p>
+      <h2>Summary</h2>
+      <p>
+        From this manual, you have acquired the knowledge and skills needed to run a Python file using the macOS terminal. Knowing how to navigate the command line is vital as it allows 
+        users to perform complex tasks faster and provides a range of tools and utilities that may not be available to access through GUIs.<br><br>
+        In this tutorial, you learned how to:<br>
+        <div style="margin-left: 40px;">
+          <p>
+            &#x2022; Use basic Unix commands like pwd, ls, and cd<br>
+            &#x2022; Navigate through the file hierarchy tree to find the correct directory<br>
+            &#x2022; Run Python files and programs in the terminal<br><br>
+          </p>
+        </div>
+      </p>
+      <h2>Glossary</h2>
+      <li><b>cd (Change Directory)</b> - The Unix-based command that is used to change the current working directory in a CLI environment</li>
+      <li><b>Command line interface (CLI)</b> - A text-based interface in which the user interacts with the computer by typing commands into a console or terminal</li>
+      <li><b>Directory</b> - A file system structure that contains references to other files or directories and is used to manage files in a hierarchical manner</li>
+      <li><b>File</b> - A collection of data stored in a file system, typically represented as a single unit and identified by a unique name</li>
+      <li><b>File system</b> - A system that organizes and manages data on storage devices and determines how files are named, stored, and retrieved</li>
+      <li><b>Graphical user interface (GUI)</b> - A visual-based interface that lets users interact with electronic devices using visual icons and indicators, as opposed to text-based interfaces</li>
+      <li><b>Home directory</b> - A personal storage space for a user’s files, typically represented as ~ in Unix-like systems. In MacOS, the home directory is named with the user’s username and has folders for the user’s desktop files, downloads, pictures, documents, etc.</li>
+      <li><b>ls (List)</b> - The Unix-based command that lists all files and directories in the current directory</li>
+      <li><b>MacOS</b> - A Unix-based operating system developed by Apple Inc., developed specifically for the company’s Mac line of personal computers and laptops</li>
+      <li><b>Operating system</b> - The software that manages computer hardware, software resources, and provides services for computer programs to execute applications</li>
+      <li><b>pwd (Print Working Directory)</b> - The Unix-based command that displays the current working directory path in the CLI</li>
+      <li><b>Root</b> - The top-level directory of the file system from which all other directories branch off of</li>
+      <li><b>Terminal</b> - A text-based interface that allows users, through typed commands, to interact with the computer’s operating system</li>
+      <li><b>Unix</b> - A powerful operating system originally created in the 1960s, which has influenced many other operating systems such as Linux</li>
+      
+      <footer style="margin-top: 40px;">
+        <p><sup>1</sup> Image from <a href="https://www.codecademy.com/resources/docs/general/file-system-structure" target="_blank">Codeacademy</a></p>
+      </footer>
     </div>
   </body>
 </html>
